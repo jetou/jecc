@@ -1,7 +1,7 @@
 #ifndef LEX_H
 #define LEX_H
 
-#define MAX_LEN;
+#define MAX_LEN   150
 
 typedef union{
 	char name[MAX_LEN];
@@ -21,7 +21,7 @@ typedef struct {
 }Token_j;
 
 typedef struct lexer_t {
-	token_j *untoken;
+	Token_j *untoken;
 
 	FILE *fp;
 	const char *fname;
