@@ -3,32 +3,30 @@
 
 #define MAX_LEN   150
 
-typedef union{
-	char name[MAX_LEN];
-	int valuelen;
-}Value;
+union value{
+	int i[2];
+	float f;
+	double d;
+	void *p;
+};
 
-typedef enum {
+enum  token{
+	TK_BEGIN,
 	#define TOKEN(kind, name) Kind,
-	#include "token.txt"
+	#include "token.h"
 	#undef TOKEN
-}TokenKind;
+};
 
 
-typedef struct {
-	TokenKind Kind;
-	Value value;
-}Token_j;
 
-typedef struct lexer_t {
-	Token_j *untoken;
 
-	FILE *fp;
-	const char *fname;
-	unsigned int line;
-	unsigned int column;
-	unsigned int prev_colum;
-}lexer_j;
+#define IsDigit(c)		(c >= '0' && c <= '9')
+#define IsOctDigit(c)	(c >= '0' && c <= '7')
+#define IsHexDigit(c)	(isdigit(c) || (c >= 'A' && c <= 'F'))
+#define ToUpper(c)		(c & ~0x20)
+
+
+
 
 int GetNextToken(void);
 void PeekToken(void);

@@ -53,7 +53,7 @@ void ReadSourceFile(char *filename)
 	Input.base = (unsigned char *)MapViewOfFile(Input.fileMapping, FILE_MAP_WRITE, 0, 0, 0);
 	if (Input.base == NULL)
 	{
-		Fatal("Can't map file : %s", filename;
+		Fatal("Can't map file : %s", filename);
 	}
 
 #endif 
@@ -68,7 +68,19 @@ void ReadSourceFile(char *filename)
 
 void CloseSourceFile(void)
 {
+#if defined(_UCC)
 
+	free(Input.base);
+
+#elif defined(_WIN32)
+
+	UnmapViewOfFile(Input.base);
+	CloseHandle(Input.fileMapping);
+	SetFilePointer(Input.file, Input.size, NULL, FILE_BEGIN);
+	SetEndOfFile(Input.file);
+	CloseHandle(Input.file);
+
+#endif
 }
 
 

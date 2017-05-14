@@ -4,7 +4,7 @@
 typedef struct coord
 {
 	char *filename;
-	//int ppline;
+	int ppline;
 	int line;
 	int col;
 };
@@ -22,6 +22,7 @@ struct input
 };
 
 extern struct input Input;
+extern unsigned char END_OF_FILE;
 
 
 void ReadSourceFile(char *fileName);
